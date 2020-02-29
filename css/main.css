@@ -1450,3 +1450,65 @@ textarea.form-control {
         width: 380px;
     }
 }
+
+.order-container {
+    transform: rotate(-40deg);
+    width: 600px;
+    margin-left: 200px;
+    margin-top: 100px;
+    margin-bottom: 60px;
+}
+
+.order-row {
+    float: left;
+}
+
+.order-spot, .subroad, .mainroad {
+    background-color: #44a23e;
+    width: 60px;
+    height: 40px;
+    border: 1px solid #dfdfdf;
+    color: #ffff;
+    text-align: center;
+    padding-top: 10px;
+    cursor: pointer;
+}
+
+.order-spot.sold {
+    background-color: red;
+}
+
+.order-spot.ordered {
+    background-color: blue;
+}
+
+.mainroad {
+    width: 25px;
+    height: 40px;
+    background-color: black;
+}
+
+.subroad {
+    width: 15px;
+    height: 40px;
+    background-color: gray;
+}
+
+.order-spot.empty, .subroad.empty {
+    background-color: #ffff;
+    border: none;
+}
+
+.yellow-seperator, .subroad-yellow-seperator, .mainroad-yellow-seperator {
+    height: 6px;
+    width: 60px;
+    background-color: yellow;
+}
+
+.subroad-yellow-seperator {
+    width: 10px;
+}
+
+.mainroad-yellow-seperator {
+    width: 25px;
+}
