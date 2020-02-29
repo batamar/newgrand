@@ -2,12 +2,12 @@
 
 class Spot extends React.Component {
     render() {
-        const { isEmpty, letter, index, status } = this.props;
+        const { isEmpty, letter, index, status="available" } = this.props;
 
         let classNames = `order-spot ${isEmpty ? 'empty' : 'full'} ${status}`;
 
         return (
-            <div className={classNames}>
+            <div className={classNames} data-erxes-modal={ status === "available" ? "NcH5hk" : "" }>
                 {letter} {index}
             </div>
         )
@@ -81,6 +81,7 @@ class App extends React.Component {
 
     render() {
         return (
+            <div>
             <div className="order-container">
                 <div className="order-row">
                     {this.renderEmpty(8)}
@@ -168,6 +169,14 @@ class App extends React.Component {
                 </div>
 
                 <div style={{ clear: 'both' }} />
+            </div>
+                <div className="direction">
+                    <img src="img/direction.jpg" />
+                </div>
+
+                <div className="guide">
+                    <img src="img/order-guide.jpg" />
+                </div>
             </div>
         )
     }

@@ -24,14 +24,15 @@ var Spot = function (_React$Component) {
                 isEmpty = _props.isEmpty,
                 letter = _props.letter,
                 index = _props.index,
-                status = _props.status;
+                _props$status = _props.status,
+                status = _props$status === undefined ? "available" : _props$status;
 
 
             var classNames = 'order-spot ' + (isEmpty ? 'empty' : 'full') + ' ' + status;
 
             return React.createElement(
                 'div',
-                { className: classNames },
+                { className: classNames, 'data-erxes-modal': status === "available" ? "NcH5hk" : "" },
                 letter,
                 ' ',
                 index
@@ -137,105 +138,119 @@ var App = function (_React$Component2) {
         value: function render() {
             return React.createElement(
                 'div',
-                { className: 'order-container' },
+                null,
                 React.createElement(
                     'div',
-                    { className: 'order-row' },
-                    this.renderEmpty(8),
-                    this.renderYellow(),
-                    this.renderSpot('A', 1, 1, 'sold'),
-                    this.renderSpot('A', 2, 2, 'ordered'),
-                    this.renderEmpty(4)
+                    { className: 'order-container' },
+                    React.createElement(
+                        'div',
+                        { className: 'order-row' },
+                        this.renderEmpty(8),
+                        this.renderYellow(),
+                        this.renderSpot('A', 1, 1, 'sold'),
+                        this.renderSpot('A', 2, 2, 'ordered'),
+                        this.renderEmpty(4)
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'order-row' },
+                        this.renderEmptySubroad(5),
+                        this.renderSubroad(1, 3),
+                        this.renderSubroadYellow(),
+                        this.renderSubroad(3, 5)
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'order-row' },
+                        this.renderEmpty(5),
+                        this.renderSpot('B', 1, 3),
+                        this.renderYellow(),
+                        this.renderSpot('B', 4, 6),
+                        this.renderEmpty(3)
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'order-row' },
+                        this.renderEmpty(3),
+                        this.renderSpot('C', 1, 5),
+                        this.renderYellow(),
+                        this.renderSpot('C', 6, 9),
+                        this.renderEmpty(2)
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'order-row' },
+                        this.renderEmptySubroad(1),
+                        this.renderSubroad(1, 7),
+                        this.renderSubroadYellow(),
+                        this.renderSubroad(8, 11)
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'order-row' },
+                        this.renderSpot('D', 1, 8),
+                        this.renderYellow(),
+                        this.renderSpot('D', 9, 13),
+                        this.renderEmpty()
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'order-row' },
+                        this.renderSpot('E', 1, 8),
+                        this.renderYellow(),
+                        this.renderSpot('E', 9, 14)
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'order-row' },
+                        this.renderMainroad(1, 8),
+                        this.renderMainroadYellow(),
+                        this.renderMainroad(9, 14)
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'order-row' },
+                        this.renderEmpty(),
+                        this.renderSpot('F', 1, 7),
+                        this.renderYellow(),
+                        this.renderSpot('F', 8, 13)
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'order-row' },
+                        this.renderEmpty(),
+                        this.renderSpot('G', 1, 7),
+                        this.renderYellow(),
+                        this.renderSpot('G', 8, 13)
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'order-row' },
+                        this.renderEmptySubroad(1),
+                        this.renderSubroad(1, 7),
+                        this.renderSubroadYellow(),
+                        this.renderSubroad(8, 13)
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'order-row' },
+                        this.renderEmpty(2),
+                        this.renderSpot('K', 1, 6),
+                        this.renderYellow(),
+                        this.renderSpot('K', 7, 12)
+                    ),
+                    React.createElement('div', { style: { clear: 'both' } })
                 ),
                 React.createElement(
                     'div',
-                    { className: 'order-row' },
-                    this.renderEmptySubroad(5),
-                    this.renderSubroad(1, 3),
-                    this.renderSubroadYellow(),
-                    this.renderSubroad(3, 5)
+                    { className: 'direction' },
+                    React.createElement('img', { src: 'img/direction.jpg' })
                 ),
                 React.createElement(
                     'div',
-                    { className: 'order-row' },
-                    this.renderEmpty(5),
-                    this.renderSpot('B', 1, 3),
-                    this.renderYellow(),
-                    this.renderSpot('B', 4, 6),
-                    this.renderEmpty(3)
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'order-row' },
-                    this.renderEmpty(3),
-                    this.renderSpot('C', 1, 5),
-                    this.renderYellow(),
-                    this.renderSpot('C', 6, 9),
-                    this.renderEmpty(2)
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'order-row' },
-                    this.renderEmptySubroad(1),
-                    this.renderSubroad(1, 7),
-                    this.renderSubroadYellow(),
-                    this.renderSubroad(8, 11)
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'order-row' },
-                    this.renderSpot('D', 1, 8),
-                    this.renderYellow(),
-                    this.renderSpot('D', 9, 13),
-                    this.renderEmpty()
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'order-row' },
-                    this.renderSpot('E', 1, 8),
-                    this.renderYellow(),
-                    this.renderSpot('E', 9, 14)
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'order-row' },
-                    this.renderMainroad(1, 8),
-                    this.renderMainroadYellow(),
-                    this.renderMainroad(9, 14)
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'order-row' },
-                    this.renderEmpty(),
-                    this.renderSpot('F', 1, 7),
-                    this.renderYellow(),
-                    this.renderSpot('F', 8, 13)
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'order-row' },
-                    this.renderEmpty(),
-                    this.renderSpot('G', 1, 7),
-                    this.renderYellow(),
-                    this.renderSpot('G', 8, 13)
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'order-row' },
-                    this.renderEmptySubroad(1),
-                    this.renderSubroad(1, 7),
-                    this.renderSubroadYellow(),
-                    this.renderSubroad(8, 13)
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'order-row' },
-                    this.renderEmpty(2),
-                    this.renderSpot('K', 1, 6),
-                    this.renderYellow(),
-                    this.renderSpot('K', 7, 12)
-                ),
-                React.createElement('div', { style: { clear: 'both' } })
+                    { className: 'guide' },
+                    React.createElement('img', { src: 'img/order-guide.jpg' })
+                )
             );
         }
     }]);

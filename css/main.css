@@ -1451,6 +1451,10 @@ textarea.form-control {
     }
 }
 
+#app {
+    position: relative;
+}
+
 .order-container {
     transform: rotate(-40deg);
     width: 600px;
@@ -1511,4 +1515,21 @@ textarea.form-control {
 
 .mainroad-yellow-seperator {
     width: 25px;
+}
+
+.direction {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.direction img {
+    width: 200px;
+}
+
+.guide img {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 300px;
 }

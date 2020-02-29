@@ -471,5 +471,35 @@
 		<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
 
 		<script src="js/bundle.js"></script>
+
+
+		<script>
+			window.erxesSettings = {
+			  messenger: {
+				brand_id: "efQbj4",
+			  },
+			  forms: [{
+				brand_id: "efQbj4",
+				form_id: "NcH5hk",
+			  }],
+			};
+			
+		  (function() {
+			var script = document.createElement('script');
+			script.src = "https://newgrand.app.erxes.io/widgets/build/messengerWidget.bundle.js";
+			script.async = true;
+			var entry = document.getElementsByTagName('script')[0];
+			entry.parentNode.insertBefore(script, entry);
+		  })();
+
+		  (function() {
+			var script = document.createElement('script');
+			script.src = "https://newgrand.app.erxes.io/widgets/build/formWidget.bundle.js";
+			script.async = true;
+
+			var entry = document.getElementsByTagName('script')[0];
+			entry.parentNode.insertBefore(script, entry);
+		})();
+		  </script>
     </body>
 </html>
