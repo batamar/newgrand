@@ -1478,6 +1478,10 @@ textarea.form-control {
     cursor: pointer;
 }
 
+.order-spot:hover {
+    background-color: green;
+}
+
 .order-spot.sold {
     background-color: red;
 }
