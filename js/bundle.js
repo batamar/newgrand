@@ -57,6 +57,21 @@ var App = function (_React$Component2) {
     }
 
     _createClass(App, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            if (window.addEventListener) {
+                window.addEventListener('message', function (event) {
+                    var _event$data = event.data,
+                        message = _event$data.message,
+                        variables = _event$data.variables;
+
+                    if (message === 'formSuccess') {
+                        console.log(variables);
+                    }
+                });
+            }
+        }
+    }, {
         key: 'renderSpotBase',
         value: function renderSpotBase(startIndex, endIndex, componentRender) {
             var i = startIndex;

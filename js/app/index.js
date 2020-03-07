@@ -21,6 +21,17 @@ class Spot extends React.Component {
 }
 
 class App extends React.Component {
+    componentDidMount() {
+        if (window.addEventListener) {
+            window.addEventListener('message', (event) => {
+                const { message, variables } = event.data;
+                if (message === 'formSuccess') {
+                    console.log(variables)
+                }
+            });
+        }
+    }
+
     renderSpotBase(startIndex, endIndex, componentRender) {
       let i = startIndex;
 
