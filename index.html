@@ -39,8 +39,7 @@
         <link rel="stylesheet" href="css/main.css">
 
 		<!-- Modernizer Script for old Browsers -->
-        <script src="js/modernizr-2.6.2.min.js"></script>
-
+		<script src="js/modernizr-2.6.2.min.js"></script>
     </head>
 	
     <body id="body">
@@ -472,7 +471,6 @@
 
 		<script src="js/bundle.js"></script>
 
-
 		<script>
 			window.erxesSettings = {
 			  messenger: {
@@ -483,6 +481,14 @@
 				form_id: "NcH5hk",
 			  }],
 			};
+
+		  (function() {
+			var script = document.createElement('script');
+			script.src = "https://newgrand.app.erxes.io/widgets/build/eventsWidget.bundle.js";
+			script.async = true;
+			var entry = document.getElementsByTagName('script')[0];
+			entry.parentNode.insertBefore(script, entry);
+		  })();
 			
 		  (function() {
 			var script = document.createElement('script');
@@ -501,5 +507,6 @@
 			entry.parentNode.insertBefore(script, entry);
 		})();
 		  </script>
+
     </body>
 </html>

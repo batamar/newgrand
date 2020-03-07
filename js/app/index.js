@@ -5,10 +5,16 @@ class Spot extends React.Component {
         const { isEmpty, letter, index, status="available" } = this.props;
 
         let classNames = `order-spot ${isEmpty ? 'empty' : 'full'} ${status}`;
+        const spotNumber = letter ? `${letter}${index}` : null;
+
+        const onClick = () => {
+            window.Erxes.updateCustomerProperty('spotNumber', spotNumber);
+            window.Erxes.sendExtraFormContent('NcH5hk', `<div style="color: green;font-weight:bold;margin-bottom: 10px;">Сонгогдсон байршил: ${spotNumber} </div>`)
+        }
 
         return (
-            <div className={classNames} data-erxes-modal={ status === "available" ? "NcH5hk" : "" }>
-                {letter} {index}
+            <div className={classNames} data-erxes-modal={ status === "available" ? "NcH5hk" : "" } onClick={onClick}>
+                {spotNumber}
             </div>
         )
     }

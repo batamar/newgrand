@@ -29,13 +29,17 @@ var Spot = function (_React$Component) {
 
 
             var classNames = 'order-spot ' + (isEmpty ? 'empty' : 'full') + ' ' + status;
+            var spotNumber = letter ? '' + letter + index : null;
+
+            var onClick = function onClick() {
+                window.Erxes.updateCustomerProperty('spotNumber', spotNumber);
+                window.Erxes.sendExtraFormContent('NcH5hk', '<div style="color: green;font-weight:bold;margin-bottom: 10px;">\u0421\u043E\u043D\u0433\u043E\u0433\u0434\u0441\u043E\u043D \u0431\u0430\u0439\u0440\u0448\u0438\u043B: ' + spotNumber + ' </div>');
+            };
 
             return React.createElement(
                 'div',
-                { className: classNames, 'data-erxes-modal': status === "available" ? "NcH5hk" : "" },
-                letter,
-                ' ',
-                index
+                { className: classNames, 'data-erxes-modal': status === "available" ? "NcH5hk" : "", onClick: onClick },
+                spotNumber
             );
         }
     }]);
