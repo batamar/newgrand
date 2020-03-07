@@ -27,18 +27,42 @@ var Spot = function (_React$Component) {
                 _props$status = _props.status,
                 status = _props$status === undefined ? "available" : _props$status;
 
-
-            var classNames = 'order-spot ' + (isEmpty ? 'empty' : 'full') + ' ' + status;
             var spotNumber = letter ? '' + letter + index : null;
 
+            var sts = status;
+
+            if (spotNumber === localStorage.getItem('spotNumber')) {
+                sts = 'own-choice';
+            }
+
+            var classNames = 'order-spot ' + (isEmpty ? 'empty' : 'full') + ' ' + sts;
+
             var onClick = function onClick() {
-                window.Erxes.updateCustomerProperty('spotNumber', spotNumber);
-                window.Erxes.sendExtraFormContent('NcH5hk', '<div style="color: green;font-weight:bold;margin-bottom: 10px;">\u0421\u043E\u043D\u0433\u043E\u0433\u0434\u0441\u043E\u043D \u0431\u0430\u0439\u0440\u0448\u0438\u043B: ' + spotNumber + ' </div>');
+                var code = getCode();
+
+                db.collection("orders").where('userCode', '==', code).get().then(function (result) {
+                    console.log(result.size);
+
+                    if (result.size !== 0) {
+                        return alert('Та ахин захиалах боломжгүй байна');
+                    }
+
+                    localStorage.setItem('spotNumber', spotNumber);
+
+                    window.Erxes.updateCustomerProperty('Байшингийн дугаар', spotNumber);
+                    window.Erxes.sendExtraFormContent('NcH5hk', '<div style="color: red;font-size:20px;font-weight:bold;margin-bottom: 10px;">\u0421\u043E\u043D\u0433\u043E\u0433\u0434\u0441\u043E\u043D \u0431\u0430\u0439\u0440\u0448\u0438\u043B: ' + spotNumber + ' </div>');
+
+                    if (!["sold", "ordered"].includes(status)) {
+                        window.Erxes.showPopup('NcH5hk');
+                    }
+                }).catch(function (e) {
+                    console.log(e);
+                });
             };
 
             return React.createElement(
                 'div',
-                { className: classNames, 'data-erxes-modal': status === "available" ? "NcH5hk" : "", onClick: onClick },
+                { className: classNames, onClick: onClick },
                 spotNumber
             );
         }
@@ -47,26 +71,52 @@ var Spot = function (_React$Component) {
     return Spot;
 }(React.Component);
 
+var getCode = function getCode() {
+    var userCode = localStorage.getItem("userCode");
+
+    if (userCode) {
+        return userCode;
+    }
+
+    userCode = Math.random();
+
+    localStorage.setItem("userCode", userCode);
+
+    return userCode;
+};
+
 var App = function (_React$Component2) {
     _inherits(App, _React$Component2);
 
-    function App() {
+    function App(props) {
         _classCallCheck(this, App);
 
-        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+        var _this2 = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+        _this2.state = { key: Math.random() };
+        return _this2;
     }
 
     _createClass(App, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
+            var _this3 = this;
+
             if (window.addEventListener) {
                 window.addEventListener('message', function (event) {
-                    var _event$data = event.data,
-                        message = _event$data.message,
-                        variables = _event$data.variables;
+                    var message = event.data.message;
+
 
                     if (message === 'formSuccess') {
-                        console.log(variables);
+                        db.collection("orders").add({
+                            userCode: getCode(),
+                            spotNumber: localStorage.getItem('spotNumber')
+                        }).then(function (docRef) {
+                            _this3.setState({ key: Math.random() });
+                            console.log("Document written with ID: ", docRef.id);
+                        }).catch(function (error) {
+                            console.error("Error adding document: ", error);
+                        });
                     }
                 });
             }
@@ -104,8 +154,10 @@ var App = function (_React$Component2) {
         }
     }, {
         key: 'renderSpot',
-        value: function renderSpot(letter, startIndex, endIndex, status) {
+        value: function renderSpot(letter, startIndex, endIndex) {
             return this.renderSpotBase(startIndex, endIndex, function (i) {
+                var status = window.statusMap['' + letter + i];
+
                 return React.createElement(Spot, { isEmpty: false, letter: letter, index: i, status: status });
             });
         }
@@ -157,7 +209,7 @@ var App = function (_React$Component2) {
         value: function render() {
             return React.createElement(
                 'div',
-                null,
+                { key: this.state.key },
                 React.createElement(
                     'div',
                     { className: 'order-container' },
@@ -166,8 +218,8 @@ var App = function (_React$Component2) {
                         { className: 'order-row' },
                         this.renderEmpty(8),
                         this.renderYellow(),
-                        this.renderSpot('A', 1, 1, 'sold'),
-                        this.renderSpot('A', 2, 2, 'ordered'),
+                        this.renderSpot('A', 1, 1),
+                        this.renderSpot('A', 2, 2),
                         this.renderEmpty(4)
                     ),
                     React.createElement(
@@ -278,4 +330,26 @@ var App = function (_React$Component2) {
 }(React.Component);
 
 var domContainer = document.querySelector('#app');
-ReactDOM.render(React.createElement(App, null), domContainer);
+
+// Initialize Cloud Firestore through Firebase
+firebase.initializeApp({
+    apiKey: "AIzaSyACGYVX2d478qYkPmRO8mlv_ODB6SMpALU",
+    authDomain: "new-grand.firebaseapp.com",
+    databaseURL: "https://new-grand.firebaseio.com",
+    projectId: "new-grand",
+    storageBucket: "new-grand.appspot.com",
+    messagingSenderId: "493253119322",
+    appId: "1:493253119322:web:ab840b9a21fd5840383763"
+});
+
+window.db = firebase.firestore();
+window.statusMap = {};
+
+db.collection("spots").get().then(function (querySnapshot) {
+    querySnapshot.forEach(function (doc) {
+        var row = doc.data();
+        window.statusMap[row.number] = row.status;
+    });
+
+    ReactDOM.render(React.createElement(App, null), domContainer);
+});

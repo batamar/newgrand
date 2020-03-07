@@ -1490,6 +1490,10 @@ textarea.form-control {
     background-color: blue;
 }
 
+.order-spot.own-choice {
+    background-color: black;
+}
+
 .mainroad {
     width: 25px;
     height: 40px;

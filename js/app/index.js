@@ -3,30 +3,87 @@
 class Spot extends React.Component {
     render() {
         const { isEmpty, letter, index, status="available" } = this.props;
-
-        let classNames = `order-spot ${isEmpty ? 'empty' : 'full'} ${status}`;
         const spotNumber = letter ? `${letter}${index}` : null;
 
+        let sts = status;
+
+        if (spotNumber === localStorage.getItem('spotNumber')) {
+            sts = 'own-choice';
+        }
+
+        const classNames = `order-spot ${isEmpty ? 'empty' : 'full'} ${sts}`;
+
         const onClick = () => {
-            window.Erxes.updateCustomerProperty('spotNumber', spotNumber);
-            window.Erxes.sendExtraFormContent('NcH5hk', `<div style="color: green;font-weight:bold;margin-bottom: 10px;">Сонгогдсон байршил: ${spotNumber} </div>`)
+            const code = getCode();
+
+            db.collection("orders").where('userCode', '==', code).get()
+                .then((result) => {
+                    console.log(result.size);
+
+                    if (result.size !== 0) {
+                        return alert('Та ахин захиалах боломжгүй байна');
+                    }
+
+                    localStorage.setItem('spotNumber', spotNumber);
+
+                    window.Erxes.updateCustomerProperty('Байшингийн дугаар', spotNumber);
+                    window.Erxes.sendExtraFormContent('NcH5hk', `<div style="color: red;font-size:20px;font-weight:bold;margin-bottom: 10px;">Сонгогдсон байршил: ${spotNumber} </div>`);
+
+                    if (!["sold", "ordered"].includes(status)) {
+                        window.Erxes.showPopup('NcH5hk');
+                    }
+                })
+                .catch((e) => {
+                    console.log(e)
+                });
         }
 
         return (
-            <div className={classNames} data-erxes-modal={ status === "available" ? "NcH5hk" : "" } onClick={onClick}>
+            <div className={classNames} onClick={onClick}>
                 {spotNumber}
             </div>
         )
     }
 }
 
+const getCode = () => {
+  let userCode = localStorage.getItem("userCode");
+
+  if (userCode) {
+      return userCode;
+  }
+
+  userCode = Math.random();
+
+  localStorage.setItem("userCode", userCode);
+
+  return userCode;
+};
+
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { key: Math.random() };
+    }
+
     componentDidMount() {
         if (window.addEventListener) {
             window.addEventListener('message', (event) => {
-                const { message, variables } = event.data;
+                const { message } = event.data;
+
                 if (message === 'formSuccess') {
-                    console.log(variables)
+                    db.collection("orders").add({
+                        userCode: getCode(),
+                        spotNumber: localStorage.getItem('spotNumber')
+                    })
+                    .then((docRef) => {
+                        this.setState({ key: Math.random() });
+                        console.log("Document written with ID: ", docRef.id);
+                    })
+                    .catch((error) => {
+                        console.error("Error adding document: ", error);
+                    });
                 }
             });
         }
@@ -58,8 +115,10 @@ class App extends React.Component {
       return spots;
     }
 
-    renderSpot(letter, startIndex, endIndex, status) {
+    renderSpot(letter, startIndex, endIndex) {
       return this.renderSpotBase(startIndex, endIndex, (i) => {
+        const status = window.statusMap[`${letter}${i}`];
+
         return <Spot isEmpty={false} letter={letter} index={i} status={status} />
       })
     }
@@ -98,13 +157,13 @@ class App extends React.Component {
 
     render() {
         return (
-            <div>
+            <div key={this.state.key}>
             <div className="order-container">
                 <div className="order-row">
                     {this.renderEmpty(8)}
                     {this.renderYellow()}
-                    {this.renderSpot('A', 1, 1, 'sold')}
-                    {this.renderSpot('A', 2, 2, 'ordered')}
+                    {this.renderSpot('A', 1, 1)}
+                    {this.renderSpot('A', 2, 2)}
                     {this.renderEmpty(4)}
                 </div>
 
@@ -200,4 +259,26 @@ class App extends React.Component {
 }
 
 const domContainer = document.querySelector('#app');
-ReactDOM.render(<App />, domContainer);
+
+// Initialize Cloud Firestore through Firebase
+firebase.initializeApp({
+    apiKey: "AIzaSyACGYVX2d478qYkPmRO8mlv_ODB6SMpALU",
+    authDomain: "new-grand.firebaseapp.com",
+    databaseURL: "https://new-grand.firebaseio.com",
+    projectId: "new-grand",
+    storageBucket: "new-grand.appspot.com",
+    messagingSenderId: "493253119322",
+    appId: "1:493253119322:web:ab840b9a21fd5840383763"
+});
+
+window.db = firebase.firestore();
+window.statusMap = {};
+
+db.collection("spots").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+        const row = doc.data();
+        window.statusMap[row.number] = row.status;
+    });
+
+    ReactDOM.render(<App />, domContainer);
+});
