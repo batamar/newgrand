@@ -373,21 +373,7 @@
 						
 						
 						<div class="col-md-7 contact-form wow animated fadeInLeft">
-							<form action="#" method="post">
-								<div class="input-field">
-									<input type="text" name="name" class="form-control" placeholder="Your Name...">
-								</div>
-								<div class="input-field">
-									<input type="email" name="email" class="form-control" placeholder="Your Email...">
-								</div>
-								<div class="input-field">
-									<input type="text" name="subject" class="form-control" placeholder="Subject...">
-								</div>
-								<div class="input-field">
-									<textarea name="message" class="form-control" placeholder="Messages..."></textarea>
-								</div>
-						       	<button type="submit" id="submit" class="btn btn-blue btn-effect">Send</button>
-							</form>
+							<div data-erxes-embed="yKPpuu" style="width:600px;height:300px"></div>
 						</div>
 						
 						<div class="col-md-5 wow animated fadeInRight">
@@ -446,10 +432,21 @@
 			  messenger: {
 				brand_id: "efQbj4",
 			  },
-			  forms: [{
-				brand_id: "efQbj4",
-				form_id: "NcH5hk",
-			  }],
+				forms: [
+					{
+						brand_id: "efQbj4",
+						form_id: "NcH5hk",
+					},
+					{
+						brand_id: "efQbj4",
+						form_id: "yKPpuu",
+						css: `
+						  .erxes-topbar.thiner, .erxes-button.btn-block {
+							  background-color: #009EE3 !important
+						  }
+						`,
+					}
+			    ],
 			};
 
 		  (function() {
