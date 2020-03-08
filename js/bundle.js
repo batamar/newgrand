@@ -20,6 +20,8 @@ var Spot = function (_React$Component) {
     _createClass(Spot, [{
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             var _props = this.props,
                 isEmpty = _props.isEmpty,
                 letter = _props.letter,
@@ -28,10 +30,11 @@ var Spot = function (_React$Component) {
                 status = _props$status === undefined ? "available" : _props$status;
 
             var spotNumber = letter ? '' + letter + index : null;
+            var spotNumberInStore = localStorage.getItem('spotNumber');
 
             var sts = status;
 
-            if (spotNumber === localStorage.getItem('spotNumber')) {
+            if (spotNumber === spotNumberInStore) {
                 sts = 'own-choice';
             }
 
@@ -39,6 +42,21 @@ var Spot = function (_React$Component) {
 
             var onClick = function onClick() {
                 var code = getCode();
+
+                if (spotNumber === spotNumberInStore) {
+                    if (confirm('Та сонголтоо цуцлах уу ?')) {
+                        return db.collection("orders").doc(localStorage.getItem('orderId')).delete().then(function () {
+                            localStorage.removeItem('spotNumber');
+                            localStorage.removeItem('orderId');
+
+                            _this2.props.notification('canceled order');
+
+                            console.log("Document successfully deleted!");
+                        }).catch(function (error) {
+                            console.error("Error removing document: ", error);
+                        });
+                    }
+                }
 
                 db.collection("orders").where('userCode', '==', code).get().then(function (result) {
                     if (result.size !== 0) {
@@ -89,16 +107,20 @@ var App = function (_React$Component2) {
     function App(props) {
         _classCallCheck(this, App);
 
-        var _this2 = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+        var _this3 = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-        _this2.state = { key: Math.random() };
-        return _this2;
+        _this3.onNotification = function () {
+            _this3.setState({ key: Math.random() });
+        };
+
+        _this3.state = { key: Math.random() };
+        return _this3;
     }
 
     _createClass(App, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this3 = this;
+            var _this4 = this;
 
             if (window.addEventListener) {
                 window.addEventListener('message', function (event) {
@@ -110,7 +132,8 @@ var App = function (_React$Component2) {
                             userCode: getCode(),
                             spotNumber: localStorage.getItem('spotNumber')
                         }).then(function (docRef) {
-                            _this3.setState({ key: Math.random() });
+                            _this4.setState({ key: Math.random() });
+                            localStorage.setItem('orderId', docRef.id);
                             console.log("Document written with ID: ", docRef.id);
                         }).catch(function (error) {
                             console.error("Error adding document: ", error);
@@ -153,10 +176,12 @@ var App = function (_React$Component2) {
     }, {
         key: 'renderSpot',
         value: function renderSpot(letter, startIndex, endIndex) {
+            var _this5 = this;
+
             return this.renderSpotBase(startIndex, endIndex, function (i) {
                 var status = window.statusMap['' + letter + i];
 
-                return React.createElement(Spot, { isEmpty: false, letter: letter, index: i, status: status });
+                return React.createElement(Spot, { isEmpty: false, letter: letter, index: i, status: status, notification: _this5.onNotification });
             });
         }
     }, {

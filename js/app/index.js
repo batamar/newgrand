@@ -4,10 +4,11 @@ class Spot extends React.Component {
     render() {
         const { isEmpty, letter, index, status="available" } = this.props;
         const spotNumber = letter ? `${letter}${index}` : null;
+        const spotNumberInStore = localStorage.getItem('spotNumber');
 
         let sts = status;
 
-        if (spotNumber === localStorage.getItem('spotNumber')) {
+        if (spotNumber === spotNumberInStore) {
             sts = 'own-choice';
         }
 
@@ -15,6 +16,22 @@ class Spot extends React.Component {
 
         const onClick = () => {
             const code = getCode();
+
+            if (spotNumber === spotNumberInStore) {
+                if (confirm('Та сонголтоо цуцлах уу ?')) {
+                    return db.collection("orders").doc(localStorage.getItem('orderId')).delete()
+                        .then(() => {
+                            localStorage.removeItem('spotNumber');
+                            localStorage.removeItem('orderId');
+
+                            this.props.notification('canceled order');
+
+                            console.log("Document successfully deleted!");
+                        }).catch((error) => {
+                            console.error("Error removing document: ", error);
+                        });
+                }
+            }
 
             db.collection("orders").where('userCode', '==', code).get()
                 .then((result) => {
@@ -77,6 +94,7 @@ class App extends React.Component {
                     })
                     .then((docRef) => {
                         this.setState({ key: Math.random() });
+                        localStorage.setItem('orderId', docRef.id);
                         console.log("Document written with ID: ", docRef.id);
                     })
                     .catch((error) => {
@@ -85,6 +103,10 @@ class App extends React.Component {
                 }
             });
         }
+    }
+
+    onNotification = () => {
+        this.setState({ key: Math.random() });
     }
 
     renderSpotBase(startIndex, endIndex, componentRender) {
@@ -117,7 +139,7 @@ class App extends React.Component {
       return this.renderSpotBase(startIndex, endIndex, (i) => {
         const status = window.statusMap[`${letter}${i}`];
 
-        return <Spot isEmpty={false} letter={letter} index={i} status={status} />
+        return <Spot isEmpty={false} letter={letter} index={i} status={status} notification={this.onNotification} />
       })
     }
 
