@@ -18,8 +18,6 @@ class Spot extends React.Component {
 
             db.collection("orders").where('userCode', '==', code).get()
                 .then((result) => {
-                    console.log(result.size);
-
                     if (result.size !== 0) {
                         return alert('Та ахин захиалах боломжгүй байна');
                     }

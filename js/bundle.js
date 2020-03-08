@@ -41,8 +41,6 @@ var Spot = function (_React$Component) {
                 var code = getCode();
 
                 db.collection("orders").where('userCode', '==', code).get().then(function (result) {
-                    console.log(result.size);
-
                     if (result.size !== 0) {
                         return alert('Та ахин захиалах боломжгүй байна');
                     }
