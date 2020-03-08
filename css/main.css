@@ -1541,3 +1541,32 @@ textarea.form-control {
     right: 0px;
     width: 300px;
 }
+
+@media only screen and (max-width: 600px) {
+    #order {
+        height: 700px;
+    }
+
+    .order-container {
+        transform: scale(0.6);
+        position: absolute;
+        top: 0px;
+        margin: 0px;
+        width: 550px;
+        left: -100px;
+    }
+
+    .guide img {
+        top: -20px;
+        width: 200px;
+    }
+
+    .direction img {
+        width: 120px;
+    }
+
+    .direction {
+        top: -20px;
+        left: 10px;
+    }
+}
