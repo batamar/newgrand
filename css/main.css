@@ -284,12 +284,13 @@ h1.navbar-brand {
     text-transform: uppercase;
 }
 
-.navbar-brand a, a:visited, a:hover {
-    color: #fff;
+.navbar-brand img {
+    position: absolute;
+    width: 200px;
+    top: 15px;
 }
 
-.navbar-brand .description {
-    font-size: 14px;
+.navbar-brand a, a:visited, a:hover {
     color: #fff;
 }
 
