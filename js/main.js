@@ -12,7 +12,7 @@ $(document).ready(function(){
 		slidesPerView:'auto',
 		centeredSlides:true,
 		effect:'coverflow',
-		speed:600,
+		speed:1200,
 		loop:!0,
 		autoplay:3e3,
 		lazyLoading: true,
