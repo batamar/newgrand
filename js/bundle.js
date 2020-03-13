@@ -66,7 +66,7 @@ var Spot = function (_React$Component) {
                     localStorage.setItem('spotNumber', spotNumber);
 
                     window.Erxes.updateCustomerProperty('Байшингийн дугаар', spotNumber);
-                    window.Erxes.sendExtraFormContent('NcH5hk', '<div style="color: red;font-size:20px;font-weight:bold;margin-bottom: 10px;">\u0421\u043E\u043D\u0433\u043E\u0433\u0434\u0441\u043E\u043D \u0431\u0430\u0439\u0440\u0448\u0438\u043B: ' + spotNumber + ' </div>');
+                    window.Erxes.sendExtraFormContent('NcH5hk', '<div style="margin-bottom: 10px;">\u0421\u043E\u043D\u0433\u043E\u0433\u0434\u0441\u043E\u043D \u0431\u0430\u0439\u0440\u0448\u0438\u043B: <div style="color:red;display:inline-block;font-weight:bold; border: 1px solid;padding: 2px 20px;margin-left: 10px;">' + spotNumber + '</div> </div>');
 
                     if (!["sold", "ordered"].includes(status)) {
                         window.Erxes.showPopup('NcH5hk');

@@ -42,7 +42,7 @@ class Spot extends React.Component {
                     localStorage.setItem('spotNumber', spotNumber);
 
                     window.Erxes.updateCustomerProperty('Байшингийн дугаар', spotNumber);
-                    window.Erxes.sendExtraFormContent('NcH5hk', `<div style="color: red;font-size:20px;font-weight:bold;margin-bottom: 10px;">Сонгогдсон байршил: ${spotNumber} </div>`);
+                    window.Erxes.sendExtraFormContent('NcH5hk', `<div style="margin-bottom: 10px;">Сонгогдсон байршил: <div style="color:red;display:inline-block;font-weight:bold; border: 1px solid;padding: 2px 20px;margin-left: 10px;">${spotNumber}</div> </div>`);
 
                     if (!["sold", "ordered"].includes(status)) {
                         window.Erxes.showPopup('NcH5hk');
