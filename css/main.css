@@ -1709,7 +1709,8 @@ textarea.form-control {
 
     .guide img {
         top: -20px;
-        width: 200px;
+        right: 30px;
+        width: 180px;
     }
 
     .direction img {
@@ -1719,6 +1720,12 @@ textarea.form-control {
     .direction {
         top: -20px;
         left: 10px;
+    }
+
+    #slider .swiper-container .swiper-wrapper .swiper-slide {
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 200px;
     }
 
     #slider .swiper-container .swiper-wrapper .swiper-slide .info {
