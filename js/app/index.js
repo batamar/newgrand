@@ -271,7 +271,9 @@ class App extends React.Component {
                 </div>
 
                 <div className="guide">
-                    <img src="img/order-guide.jpg" />
+                    <div class="item"><div class="color"></div><div class="content">Зарагдсан байршил</div></div>
+                    <div class="item"><div class="color"></div><div class="content">Таны захиалсан байршил</div></div>
+                    <div class="item"><div class="color"></div><div class="content">Захиалах боломжтой байршил</div></div>
                 </div>
             </div>
         )

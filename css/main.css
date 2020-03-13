@@ -1490,7 +1490,7 @@ textarea.form-control {
 }
 
 .order-spot.sold {
-    background-color: red;
+    background-color: gray;
 }
 
 .order-spot.ordered {
@@ -1498,7 +1498,7 @@ textarea.form-control {
 }
 
 .order-spot.own-choice {
-    background-color: black;
+    background-color: orange;
 }
 
 .mainroad {
@@ -1542,11 +1542,43 @@ textarea.form-control {
     width: 200px;
 }
 
-.guide img {
+.guide {
     position: absolute;
-    top: -10px;
-    right: -50px;
+    top: 10px;
+    right: 100px;
+    color: black;
+}
+
+.guide .item {
+    position: relative;
     width: 300px;
+    height: 30px;
+}
+
+.guide .color {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 4px;
+    left: 0px;
+}
+
+.guide .content {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+}
+
+.guide .item:nth-child(1) .color {
+    background-color: gray;
+}
+
+.guide .item:nth-child(2) .color {
+    background-color: orange;
+}
+
+.guide .item:nth-child(3) .color {
+    background-color: #44a23e;
 }
 
 /*slider*/
@@ -1727,10 +1759,9 @@ textarea.form-control {
         left: -100px;
     }
 
-    .guide img {
-        top: -20px;
-        right: 30px;
-        width: 180px;
+    .guide {
+        top: -25px;
+        right: 50px;
     }
 
     .direction img {
