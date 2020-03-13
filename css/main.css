@@ -316,7 +316,6 @@ h1.navbar-brand {
 	Home Slider
 ==================================================================*/
 
-
 #home-slider {
     position: relative;
     padding: 0;
@@ -1570,3 +1569,169 @@ textarea.form-control {
         left: 10px;
     }
 }
+
+/*slider*/
+#slider {
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+  
+  #slider .swiper-container {
+    width: 100%;
+    overflow: visible;
+  }
+  
+  #slider .swiper-container .swiper-wrapper {
+    z-index: 2;
+  }
+  
+  #slider .swiper-container .swiper-wrapper .swiper-slide.swiper-slide-active {
+    opacity: 1;
+    z-index: 100;
+  }
+  
+  #slider .swiper-container .swiper-wrapper .swiper-slide.swiper-slide-active .info {
+    opacity: 1;
+    z-index: 999999;
+  }
+  
+  #slider .swiper-container .swiper-wrapper .swiper-slide {
+    display: block;
+    opacity: 0.7;
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 400px;
+  }
+  
+  #slider .swiper-container .swiper-wrapper .swiper-slide .back-effect {
+    bottom: 0px;
+    position: absolute;
+    left: 0px;
+    width: 100%;
+  }
+  
+  #slider .swiper-container .swiper-wrapper .swiper-slide .back-effect img {
+    height: 200px;
+    width: 100%;
+  }
+  
+  #slider .swiper-container .swiper-wrapper .swiper-slide .info {
+    width: 100%;
+    opacity: 0;
+    position: absolute;
+    z-index: 99999999999;
+    bottom: 20px;
+    left: 0;
+    text-align: right;
+    margin-left: -50px;
+  }
+  
+  #slider .swiper-container .swiper-wrapper .swiper-slide .info h3,
+  #slider .swiper-container .swiper-wrapper .swiper-slide .info h4,
+  #slider .swiper-container .swiper-wrapper .swiper-slide .info .more {
+    color: #fff;
+  }
+  
+  #slider .swiper-container .swiper-wrapper .swiper-slide .info h3 {
+    margin: 5px 0 15px;
+    font-size: 22px;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+  
+  #slider .swiper-container .swiper-wrapper .swiper-slide .info h4 {
+    font-size: 15px;
+  }
+  
+  #slider .swiper-container .swiper-wrapper .swiper-slide .info .more {
+    display: block;
+    border-radius: 5px;
+    background-color: #b71540;
+    width: 170px;
+    height: 37px;
+    line-height: 37px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  #slider .swiper-container .swiper-wrapper .swiper-slide .swiper-slide-shadow-right {
+    opacity: 1 !important;
+  }
+  
+  #slider .swiper-container .swiper-button-prev {
+    z-index: 999999;
+    background-image: url("../img/chevron-left.png");
+    background-size: cover;
+    width: 64px;
+    height: 64px;
+    margin-top: -32px;
+    left: 50px;
+  }
+  
+  #slider .swiper-container .swiper-button-next {
+    z-index: 999999;
+    background-image: url("../img/chevron-right.png");
+    background-size: cover;
+    width: 64px;
+    height: 64px;
+    margin-top: -32px;
+    right: 50px;
+  }
+  
+  #slider .swiper-container .parallax-elements {
+    position: absolute;
+    width: 100%;
+    top: 586px;
+    z-index: 9999999;
+  }
+  
+  #slider .swiper-container .parallax-elements .left {
+    left: 0px;
+    margin-top: -250px;
+  }
+  
+  #slider .swiper-container .parallax-elements .right {
+    right: 0px;
+    margin-top: -70px;
+  }
+  
+  #slider .swiper-container .swiper-pagination-bullets {
+    bottom: 20px;
+  }
+  
+  #slider .swiper-container .swiper-pagination-bullets .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    opacity: 1;
+    background: #fff;
+  }
+  
+  #slider .swiper-container .swiper-pagination-bullets .swiper-pagination-bullet-active {
+    background: #b71540;
+  }
+  
+  #slides {
+    margin-top: 50px;
+    max-height: 425px;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  #slides img {
+    max-width: 100%;
+  }
+
+  @media only screen and (min-width: 1170px) {
+    #slider .swiper-container .swiper-wrapper .swiper-slide {
+      width: 1140px !important;
+      height: 600px !important;
+    }
+  }
+  
+  @media (max-width: 1199px) {
+    #slider .swiper-container {
+      overflow: hidden !important;
+    }
+  }
