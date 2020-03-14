@@ -5,10 +5,11 @@ class Spot extends React.Component {
         const { isEmpty, letter, index, status="available" } = this.props;
         const spotNumber = letter ? `${letter}${index}` : null;
         const spotNumberInStore = localStorage.getItem('spotNumber');
+        const storedOrderId = localStorage.getItem('orderId');
 
         let sts = status;
 
-        if (spotNumber === spotNumberInStore) {
+        if (spotNumber === spotNumberInStore && storedOrderId) {
             sts = 'own-choice';
         }
 
@@ -16,10 +17,11 @@ class Spot extends React.Component {
 
         const onClick = () => {
             const code = getCode();
+            const storedOrderId = localStorage.getItem('orderId');
 
-            if (spotNumber === spotNumberInStore) {
+            if (spotNumber === spotNumberInStore && storedOrderId) {
                 if (confirm('Та сонголтоо цуцлах уу ?')) {
-                    return db.collection("orders").doc(localStorage.getItem('orderId')).delete()
+                    return db.collection("orders").doc(storedOrderId).delete()
                         .then(() => {
                             localStorage.removeItem('spotNumber');
                             localStorage.removeItem('orderId');
@@ -93,8 +95,10 @@ class App extends React.Component {
                         spotNumber: localStorage.getItem('spotNumber')
                     })
                     .then((docRef) => {
-                        this.setState({ key: Math.random() });
                         localStorage.setItem('orderId', docRef.id);
+
+                        this.setState({ key: Math.random() });
+
                         console.log("Document written with ID: ", docRef.id);
                     })
                     .catch((error) => {

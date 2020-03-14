@@ -31,10 +31,11 @@ var Spot = function (_React$Component) {
 
             var spotNumber = letter ? '' + letter + index : null;
             var spotNumberInStore = localStorage.getItem('spotNumber');
+            var storedOrderId = localStorage.getItem('orderId');
 
             var sts = status;
 
-            if (spotNumber === spotNumberInStore) {
+            if (spotNumber === spotNumberInStore && storedOrderId) {
                 sts = 'own-choice';
             }
 
@@ -42,10 +43,11 @@ var Spot = function (_React$Component) {
 
             var onClick = function onClick() {
                 var code = getCode();
+                var storedOrderId = localStorage.getItem('orderId');
 
-                if (spotNumber === spotNumberInStore) {
+                if (spotNumber === spotNumberInStore && storedOrderId) {
                     if (confirm('Та сонголтоо цуцлах уу ?')) {
-                        return db.collection("orders").doc(localStorage.getItem('orderId')).delete().then(function () {
+                        return db.collection("orders").doc(storedOrderId).delete().then(function () {
                             localStorage.removeItem('spotNumber');
                             localStorage.removeItem('orderId');
 
@@ -132,8 +134,10 @@ var App = function (_React$Component2) {
                             userCode: getCode(),
                             spotNumber: localStorage.getItem('spotNumber')
                         }).then(function (docRef) {
-                            _this4.setState({ key: Math.random() });
                             localStorage.setItem('orderId', docRef.id);
+
+                            _this4.setState({ key: Math.random() });
+
                             console.log("Document written with ID: ", docRef.id);
                         }).catch(function (error) {
                             console.error("Error adding document: ", error);
