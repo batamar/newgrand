@@ -270,9 +270,7 @@ class App extends React.Component {
 
                 <div style={{ clear: 'both' }} />
             </div>
-                <div className="direction">
-                    <img src="img/direction.jpg" />
-                </div>
+                <div className="direction"></div>
 
                 <div className="guide">
                     <div class="item"><div class="color"></div><div class="content">Зарагдсан байршил</div></div>

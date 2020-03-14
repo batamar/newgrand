@@ -1542,13 +1542,14 @@ textarea.form-control {
 }
 
 .direction {
+    background-image: url('../img/direction.png');
+    background-repeat: no-repeat;
+    background-size: auto;
     position: absolute;
+    width: 203px;
+    height: 140px;
     top: 0px;
     left: 0px;
-}
-
-.direction img {
-    width: 200px;
 }
 
 .guide {
@@ -1774,11 +1775,10 @@ textarea.form-control {
         font-size: 9px;
     }
 
-    .direction img {
-        width: 120px;
-    }
-
     .direction {
+        background-image: url('../img/direction-mobile.png');
+        width: 160px;
+        height: 137px;
         top: -20px;
         left: 10px;
     }

@@ -339,11 +339,7 @@ var App = function (_React$Component2) {
                     ),
                     React.createElement('div', { style: { clear: 'both' } })
                 ),
-                React.createElement(
-                    'div',
-                    { className: 'direction' },
-                    React.createElement('img', { src: 'img/direction.jpg' })
-                ),
+                React.createElement('div', { className: 'direction' }),
                 React.createElement(
                     'div',
                     { className: 'guide' },
