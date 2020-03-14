@@ -518,6 +518,10 @@ h1.navbar-brand {
     width: 60%;
 }
 
+#news .video iframe {
+    max-width: 100%;
+}
+
 #news .description {
     float: right;
     width: 35%;
@@ -1748,6 +1752,7 @@ textarea.form-control {
 @media only screen and (max-width: 600px) {
     #order {
         height: 700px;
+        overflow: hidden;
     }
 
     .order-container {
@@ -1761,7 +1766,8 @@ textarea.form-control {
 
     .guide {
         top: -25px;
-        right: 50px;
+        left: 200px;
+        font-size: 9px;
     }
 
     .direction img {
@@ -1785,5 +1791,10 @@ textarea.form-control {
 
     #slider .swiper-container .swiper-wrapper .swiper-slide .info h3 {
         font-size: 20px;
+    }
+
+    #news .video, #news .description {
+        padding: 0px 20px;
+        width: 100%;
     }
 }
