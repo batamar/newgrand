@@ -42,7 +42,7 @@ class Spot extends React.Component {
                     localStorage.setItem('spotNumber', spotNumber);
 
                     window.Erxes.updateCustomerProperty('Байшингийн дугаар', spotNumber);
-                    window.Erxes.sendExtraFormContent('NcH5hk', `<div style="margin-bottom: 10px;">Сонгогдсон байршил: <div style="color:red;display:inline-block;font-weight:bold; border: 1px solid;padding: 2px 20px;margin-left: 10px;">${spotNumber}</div> </div> <div style="position:absolute;bottom:80px;color:black;"><p style="margin:0px;"><input type="checkbox" id="terms-of-use" /> <label for="terms-of-use">Худалдан авах гэрээний нөхцөлийг хүлээн зөвшөөрч байна</label></p><a href="http://newgrand.mn/terms-of-use.html" style="margin-left:23px;" target="__blank">Худалдан авах гэрээний нөхцөлтэй танилцах</a></a></div>`);
+                    window.Erxes.sendExtraFormContent('NcH5hk', `<div style="margin-bottom: 10px;">Сонгогдсон байршил: <div style="color:red;display:inline-block;font-weight:bold; border: 1px solid;padding: 2px 20px;margin-left: 10px;">${spotNumber}</div> </div> <div style="position:absolute;bottom:80px;color:black;"><p style="margin:0px;"><input type="checkbox" id="terms-of-use" /> <label for="terms-of-use">Худалдан авах гэрээний нөхцөлийг хүлээн зөвшөөрч байна</label></p><a href="http://newgrand.mn/terms-of-use.pdf" style="margin-left:23px;" target="__blank">Худалдан авах гэрээний нөхцөлтэй танилцах</a></a></div>`);
 
                     if (!["sold", "ordered"].includes(status)) {
                         window.Erxes.showPopup('NcH5hk');
