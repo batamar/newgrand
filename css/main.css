@@ -1466,6 +1466,10 @@ textarea.form-control {
     position: relative;
 }
 
+#order {
+    overflow: hidden;
+}
+
 .order-container {
     transform: rotate(-40deg);
     width: 600px;
@@ -1752,7 +1756,6 @@ textarea.form-control {
 @media only screen and (max-width: 600px) {
     #order {
         height: 700px;
-        overflow: hidden;
     }
 
     .order-container {
