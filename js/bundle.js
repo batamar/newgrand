@@ -369,7 +369,7 @@ var App = function (_React$Component2) {
                         React.createElement(
                             'div',
                             { 'class': 'content' },
-                            '\u0417\u0430\u0445\u0438\u0430\u043B\u0430\u0433\u0434\u0441\u0430\u043D \u0431\u0430\u0439\u0440\u0448\u0438\u043B'
+                            '\u0413\u044D\u0440\u044D\u044D \u0445\u0438\u0439\u0433\u0434\u044D\u0436 \u0431\u0430\u0439\u0433\u0430\u0430 \u0431\u0430\u0439\u0440\u0448\u0438\u043B'
                         )
                     ),
                     React.createElement(

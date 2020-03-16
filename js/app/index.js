@@ -284,7 +284,7 @@ class App extends React.Component {
 
                 <div className="guide">
                     <div class="item"><div class="color"></div><div class="content">Зарагдсан байршил</div></div>
-                    <div class="item"><div class="color"></div><div class="content">Захиалагдсан байршил</div></div>
+                    <div class="item"><div class="color"></div><div class="content">Гэрээ хийгдэж байгаа байршил</div></div>
                     <div class="item"><div class="color"></div><div class="content">Захиалах боломжтой байршил</div></div>
                     <div class="item"><div class="color"></div><div class="content">Таны захиалсан байршил</div></div>
                 </div>
