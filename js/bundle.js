@@ -70,7 +70,7 @@ var Spot = function (_React$Component) {
                     window.Erxes.updateCustomerProperty('Байшингийн дугаар', spotNumber);
                     window.Erxes.sendExtraFormContent('NcH5hk', '<div style="margin-bottom: 10px;">\u0421\u043E\u043D\u0433\u043E\u0433\u0434\u0441\u043E\u043D \u0431\u0430\u0439\u0440\u0448\u0438\u043B: <div style="color:red;display:inline-block;font-weight:bold; border: 1px solid;padding: 2px 20px;margin-left: 10px;">' + spotNumber + '</div> </div> <div style="position:absolute;bottom:80px;color:black;"><p style="margin:0px;"><input type="checkbox" id="terms-of-use" /> <label for="terms-of-use">\u0425\u0443\u0434\u0430\u043B\u0434\u0430\u043D \u0430\u0432\u0430\u0445 \u0433\u044D\u0440\u044D\u044D\u043D\u0438\u0439 \u043D\u04E9\u0445\u0446\u04E9\u043B\u0438\u0439\u0433 \u0445\u04AF\u043B\u044D\u044D\u043D \u0437\u04E9\u0432\u0448\u04E9\u04E9\u0440\u0447 \u0431\u0430\u0439\u043D\u0430</label></p><a href="http://newgrand.mn/terms-of-use.pdf" style="margin-left:23px;" target="__blank">\u0425\u0443\u0434\u0430\u043B\u0434\u0430\u043D \u0430\u0432\u0430\u0445 \u0433\u044D\u0440\u044D\u044D\u043D\u0438\u0439 \u043D\u04E9\u0445\u0446\u04E9\u043B\u0442\u044D\u0439 \u0442\u0430\u043D\u0438\u043B\u0446\u0430\u0445</a></a></div>');
 
-                    if (!["sold", "ordered"].includes(status)) {
+                    if (status !== 'sold') {
                         window.Erxes.showPopup('NcH5hk');
                     }
                 }).catch(function (e) {
@@ -130,15 +130,24 @@ var App = function (_React$Component2) {
 
 
                     if (message === 'formSuccess') {
+                        var spotNumber = localStorage.getItem('spotNumber');
+
                         db.collection("orders").add({
                             userCode: getCode(),
-                            spotNumber: localStorage.getItem('spotNumber')
+                            spotNumber: spotNumber
                         }).then(function (docRef) {
                             localStorage.setItem('orderId', docRef.id);
 
                             _this4.setState({ key: Math.random() });
 
                             console.log("Document written with ID: ", docRef.id);
+
+                            return db.collection('spots').doc(spotNumber).set({
+                                number: spotNumber,
+                                status: 'ordered'
+                            });
+                        }).then(function () {
+                            console.log("Successfully updated spot");
                         }).catch(function (error) {
                             console.error("Error adding document: ", error);
                         });
@@ -360,7 +369,7 @@ var App = function (_React$Component2) {
                         React.createElement(
                             'div',
                             { 'class': 'content' },
-                            '\u0422\u0430\u043D\u044B \u0437\u0430\u0445\u0438\u0430\u043B\u0441\u0430\u043D \u0431\u0430\u0439\u0440\u0448\u0438\u043B'
+                            '\u0417\u0430\u0445\u0438\u0430\u043B\u0430\u0433\u0434\u0441\u0430\u043D \u0431\u0430\u0439\u0440\u0448\u0438\u043B'
                         )
                     ),
                     React.createElement(
@@ -371,6 +380,16 @@ var App = function (_React$Component2) {
                             'div',
                             { 'class': 'content' },
                             '\u0417\u0430\u0445\u0438\u0430\u043B\u0430\u0445 \u0431\u043E\u043B\u043E\u043C\u0436\u0442\u043E\u0439 \u0431\u0430\u0439\u0440\u0448\u0438\u043B'
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { 'class': 'item' },
+                        React.createElement('div', { 'class': 'color' }),
+                        React.createElement(
+                            'div',
+                            { 'class': 'content' },
+                            '\u0422\u0430\u043D\u044B \u0437\u0430\u0445\u0438\u0430\u043B\u0441\u0430\u043D \u0431\u0430\u0439\u0440\u0448\u0438\u043B'
                         )
                     )
                 )

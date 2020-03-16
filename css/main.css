@@ -1584,11 +1584,15 @@ textarea.form-control {
 }
 
 .guide .item:nth-child(2) .color {
-    background-color: orange;
+    background-color: blue;
 }
 
 .guide .item:nth-child(3) .color {
     background-color: #44a23e;
+}
+
+.guide .item:nth-child(4) .color {
+    background-color: orange;
 }
 
 /*slider*/

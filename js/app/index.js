@@ -46,7 +46,7 @@ class Spot extends React.Component {
                     window.Erxes.updateCustomerProperty('Байшингийн дугаар', spotNumber);
                     window.Erxes.sendExtraFormContent('NcH5hk', `<div style="margin-bottom: 10px;">Сонгогдсон байршил: <div style="color:red;display:inline-block;font-weight:bold; border: 1px solid;padding: 2px 20px;margin-left: 10px;">${spotNumber}</div> </div> <div style="position:absolute;bottom:80px;color:black;"><p style="margin:0px;"><input type="checkbox" id="terms-of-use" /> <label for="terms-of-use">Худалдан авах гэрээний нөхцөлийг хүлээн зөвшөөрч байна</label></p><a href="http://newgrand.mn/terms-of-use.pdf" style="margin-left:23px;" target="__blank">Худалдан авах гэрээний нөхцөлтэй танилцах</a></a></div>`);
 
-                    if (!["sold", "ordered"].includes(status)) {
+                    if (status !== 'sold') {
                         window.Erxes.showPopup('NcH5hk');
                     }
                 })
@@ -90,9 +90,11 @@ class App extends React.Component {
                 const { message } = event.data;
 
                 if (message === 'formSuccess') {
+                    const spotNumber = localStorage.getItem('spotNumber');
+
                     db.collection("orders").add({
                         userCode: getCode(),
-                        spotNumber: localStorage.getItem('spotNumber')
+                        spotNumber
                     })
                     .then((docRef) => {
                         localStorage.setItem('orderId', docRef.id);
@@ -100,6 +102,14 @@ class App extends React.Component {
                         this.setState({ key: Math.random() });
 
                         console.log("Document written with ID: ", docRef.id);
+
+                        return db.collection('spots').doc(spotNumber).set({
+                            number: spotNumber,
+                            status: 'ordered'
+                        })
+                    })
+                    .then(function() {
+                        console.log("Successfully updated spot");
                     })
                     .catch((error) => {
                         console.error("Error adding document: ", error);
@@ -274,8 +284,9 @@ class App extends React.Component {
 
                 <div className="guide">
                     <div class="item"><div class="color"></div><div class="content">Зарагдсан байршил</div></div>
-                    <div class="item"><div class="color"></div><div class="content">Таны захиалсан байршил</div></div>
+                    <div class="item"><div class="color"></div><div class="content">Захиалагдсан байршил</div></div>
                     <div class="item"><div class="color"></div><div class="content">Захиалах боломжтой байршил</div></div>
+                    <div class="item"><div class="color"></div><div class="content">Таны захиалсан байршил</div></div>
                 </div>
             </div>
         )
