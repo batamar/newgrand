@@ -1653,7 +1653,7 @@ textarea.form-control {
   
   #slider .swiper-container .swiper-wrapper .swiper-slide .info h3,
   #slider .swiper-container .swiper-wrapper .swiper-slide .info h4,
-  #slider .swiper-container .swiper-wrapper .swiper-slide .info .more {
+  #slider .swiper-container .swiper-wrapper .swiper-slide .info .more a {
     color: #fff;
   }
   
@@ -1757,6 +1757,15 @@ textarea.form-control {
   }
 
 @media only screen and (max-width: 600px) {
+    #slider .swiper-container .swiper-wrapper .swiper-slide .info .more {
+        width: 150px;
+        margin-left: 60px;
+    }
+
+    #slider .swiper-container .swiper-wrapper .swiper-slide .info h3 {
+        margin-right: -20px;
+    }
+
     #order {
         height: 700px;
     }
@@ -1801,5 +1810,9 @@ textarea.form-control {
 
     #slider .swiper-container .swiper-wrapper .swiper-slide .info h3 {
         font-size: 20px;
+    }
+
+    #news .video {
+        width: 90%;
     }
 }
