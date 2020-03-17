@@ -1663,14 +1663,12 @@ textarea.form-control {
   }
   
   #slider .swiper-container .swiper-wrapper .swiper-slide .info .more {
-    display: block;
     border-radius: 5px;
     background-color: #b71540;
-    width: 170px;
-    height: 37px;
-    line-height: 37px;
+    width: 220px;
     text-align: center;
-    margin-bottom: 20px;
+    float: left;
+    margin-left: 80px;
   }
   
   /* #slider .swiper-container .swiper-wrapper .swiper-slide .swiper-slide-shadow-right {
