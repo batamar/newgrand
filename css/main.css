@@ -1473,6 +1473,11 @@ textarea.form-control {
     margin-bottom: 60px;
 }
 
+.order-container .modal {
+    transform: rotate(40deg);
+    color: black;
+}
+
 .order-row {
     float: left;
 }
@@ -1763,6 +1768,11 @@ textarea.form-control {
         margin: 0px;
         width: 550px;
         left: -100px;
+    }
+
+    .order-container .modal {
+        transform: rotate(0deg);
+        color: black;
     }
 
     .guide {

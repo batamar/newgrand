@@ -11,27 +11,198 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Spot = function (_React$Component) {
     _inherits(Spot, _React$Component);
 
-    function Spot() {
+    function Spot(props) {
         _classCallCheck(this, Spot);
 
-        return _possibleConstructorReturn(this, (Spot.__proto__ || Object.getPrototypeOf(Spot)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Spot.__proto__ || Object.getPrototypeOf(Spot)).call(this, props));
+
+        _this.showInfo = function (content) {
+            _this.setState({ info: { content: content, show: true } });
+        };
+
+        _this.hideInfo = function () {
+            _this.setState({ info: { content: '', show: false }, showConfirmation: false });
+        };
+
+        _this.showConfirmation = function () {
+            _this.setState({ showConfirmation: true });
+        };
+
+        _this.hideConfirmation = function () {
+            _this.setState({ showConfirmation: false });
+        };
+
+        _this.cancelOrder = function () {
+            var spotNumberInStore = localStorage.getItem('spotNumber');
+            var storedOrderId = localStorage.getItem('orderId');
+            var spotNumber = _this.getSpotNumber();
+
+            db.collection("orders").doc(storedOrderId).delete().then(function () {
+                localStorage.removeItem('spotNumber');
+                localStorage.removeItem('orderId');
+
+                // reset ordered status of spot if neccessary
+                db.collection("orders").where('spotNumber', '==', spotNumberInStore).get().then(function (result) {
+                    if (result.size === 0) {
+                        return db.collection('spots').doc(spotNumber).delete();
+                    }
+                }).catch(function (e) {
+                    console.log(e);
+                });
+
+                _this.hideConfirmation();
+                _this.props.notification('canceled order');
+
+                console.log("Document successfully deleted!");
+            }).catch(function (error) {
+                console.error("Error removing document: ", error);
+            });
+        };
+
+        _this.getSpotNumber = function () {
+            var _this$props = _this.props,
+                letter = _this$props.letter,
+                index = _this$props.index;
+
+            return letter ? '' + letter + index : null;
+        };
+
+        _this.state = { info: { content: '', show: false } };
+        return _this;
     }
 
     _createClass(Spot, [{
+        key: 'renderConfirmation',
+        value: function renderConfirmation() {
+            var showConfirmation = this.state.showConfirmation;
+
+
+            if (!showConfirmation) {
+                return null;
+            }
+
+            return React.createElement(
+                'div',
+                { className: 'modal show' },
+                React.createElement(
+                    'div',
+                    { className: 'modal-dialog modal-sm' },
+                    React.createElement(
+                        'div',
+                        { className: 'modal-content' },
+                        React.createElement(
+                            'div',
+                            { className: 'modal-header' },
+                            React.createElement(
+                                'h5',
+                                { className: 'modal-title' },
+                                '\u0411\u0430\u0442\u0430\u043B\u0433\u0430\u0430\u0436\u0443\u0443\u043B\u0430\u043B\u0442'
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { 'class': 'modal-body' },
+                            React.createElement(
+                                'p',
+                                null,
+                                '\u0422\u0430 \u0441\u043E\u043D\u0433\u043E\u043B\u0442\u043E\u043E \u0446\u0443\u0446\u043B\u0430\u0445 \u0443\u0443 ?'
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'modal-footer' },
+                            React.createElement(
+                                'button',
+                                {
+                                    type: 'button',
+                                    className: 'btn btn-primary',
+                                    onClick: this.cancelOrder
+                                },
+                                '\u0422\u0438\u0439\u043C'
+                            ),
+                            React.createElement(
+                                'button',
+                                {
+                                    type: 'button',
+                                    className: 'btn btn-default',
+                                    onClick: this.hideInfo
+                                },
+                                '\u04AE\u0433\u04AF\u0439'
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'renderInfo',
+        value: function renderInfo() {
+            var _state$info = this.state.info,
+                content = _state$info.content,
+                show = _state$info.show;
+
+
+            if (!show) {
+                return null;
+            }
+
+            return React.createElement(
+                'div',
+                { className: 'modal show' },
+                React.createElement(
+                    'div',
+                    { className: 'modal-dialog modal-sm' },
+                    React.createElement(
+                        'div',
+                        { className: 'modal-content' },
+                        React.createElement(
+                            'div',
+                            { className: 'modal-header' },
+                            React.createElement(
+                                'h5',
+                                { className: 'modal-title' },
+                                '\u041C\u044D\u0434\u044D\u0433\u0434\u044D\u043B'
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { 'class': 'modal-body' },
+                            React.createElement(
+                                'p',
+                                null,
+                                content
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'modal-footer' },
+                            React.createElement(
+                                'button',
+                                {
+                                    type: 'button',
+                                    className: 'btn btn-primary',
+                                    onClick: this.hideInfo
+                                },
+                                '\u0425\u0430\u0430\u0445'
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
 
             var _props = this.props,
                 isEmpty = _props.isEmpty,
-                letter = _props.letter,
-                index = _props.index,
                 _props$status = _props.status,
                 status = _props$status === undefined ? "available" : _props$status;
 
-            var spotNumber = letter ? '' + letter + index : null;
             var spotNumberInStore = localStorage.getItem('spotNumber');
             var storedOrderId = localStorage.getItem('orderId');
+            var spotNumber = this.getSpotNumber();
 
             var sts = status;
 
@@ -46,32 +217,12 @@ var Spot = function (_React$Component) {
                 var storedOrderId = localStorage.getItem('orderId');
 
                 if (spotNumber === spotNumberInStore && storedOrderId) {
-                    if (confirm('Та сонголтоо цуцлах уу ?')) {
-                        return db.collection("orders").doc(storedOrderId).delete().then(function () {
-                            localStorage.removeItem('spotNumber');
-                            localStorage.removeItem('orderId');
-
-                            // reset ordered status of spot if neccessary
-                            db.collection("orders").where('spotNumber', '==', spotNumberInStore).get().then(function (result) {
-                                if (result.size === 0) {
-                                    return db.collection('spots').doc(spotNumber).delete();
-                                }
-                            }).catch(function (e) {
-                                console.log(e);
-                            });
-
-                            _this2.props.notification('canceled order');
-
-                            console.log("Document successfully deleted!");
-                        }).catch(function (error) {
-                            console.error("Error removing document: ", error);
-                        });
-                    }
+                    return _this2.showConfirmation();
                 }
 
                 db.collection("orders").where('userCode', '==', code).get().then(function (result) {
                     if (result.size !== 0) {
-                        return alert('Та ахин захиалах боломжгүй байна');
+                        return _this2.showInfo('Та ахин захиалах боломжгүй байна');
                     }
 
                     localStorage.setItem('spotNumber', spotNumber);
@@ -89,8 +240,14 @@ var Spot = function (_React$Component) {
 
             return React.createElement(
                 'div',
-                { className: classNames, onClick: onClick },
-                spotNumber
+                { className: classNames },
+                this.renderInfo(),
+                this.renderConfirmation(),
+                React.createElement(
+                    'div',
+                    { onClick: onClick },
+                    spotNumber
+                )
             );
         }
     }]);
@@ -203,7 +360,14 @@ var App = function (_React$Component2) {
             return this.renderSpotBase(startIndex, endIndex, function (i) {
                 var status = window.statusMap['' + letter + i];
 
-                return React.createElement(Spot, { isEmpty: false, letter: letter, index: i, status: status, notification: _this5.onNotification });
+                return React.createElement(Spot, {
+                    isEmpty: false,
+                    letter: letter,
+                    index: i,
+                    status: status,
+                    notification: _this5.onNotification,
+                    showInfo: _this5.showInfo
+                });
             });
         }
     }, {
