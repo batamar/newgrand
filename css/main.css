@@ -515,18 +515,12 @@ h1.navbar-brand {
 }
 
 #news .video {
-    float: left;
+    margin: 0px auto;
     width: 60%;
 }
 
 #news .video iframe {
     max-width: 100%;
-}
-
-#news .description {
-    float: right;
-    width: 35%;
-    text-align: justify;
 }
 
 /*=================================================================
@@ -1799,10 +1793,5 @@ textarea.form-control {
 
     #slider .swiper-container .swiper-wrapper .swiper-slide .info h3 {
         font-size: 20px;
-    }
-
-    #news .video, #news .description {
-        padding: 0px 20px;
-        width: 100%;
     }
 }
