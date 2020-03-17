@@ -51,6 +51,15 @@ var Spot = function (_React$Component) {
                             localStorage.removeItem('spotNumber');
                             localStorage.removeItem('orderId');
 
+                            // reset ordered status of spot if neccessary
+                            db.collection("orders").where('spotNumber', '==', spotNumberInStore).get().then(function (result) {
+                                if (result.size === 0) {
+                                    return db.collection('spots').doc(spotNumber).delete();
+                                }
+                            }).catch(function (e) {
+                                console.log(e);
+                            });
+
                             _this2.props.notification('canceled order');
 
                             console.log("Document successfully deleted!");

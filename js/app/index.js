@@ -26,6 +26,17 @@ class Spot extends React.Component {
                             localStorage.removeItem('spotNumber');
                             localStorage.removeItem('orderId');
 
+                            // reset ordered status of spot if neccessary
+                            db.collection("orders").where('spotNumber', '==', spotNumberInStore).get()
+                                .then((result) => {
+                                    if (result.size === 0) {
+                                        return db.collection('spots').doc(spotNumber).delete()
+                                    }
+                                })
+                                .catch((e) => {
+                                    console.log(e)
+                                });
+
                             this.props.notification('canceled order');
 
                             console.log("Document successfully deleted!");
