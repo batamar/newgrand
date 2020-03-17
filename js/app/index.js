@@ -116,12 +116,16 @@ class Spot extends React.Component {
                             return db.collection('spots').doc(spotNumber).delete()
                         }
                     })
+                    .then(() => {
+                        this.hideConfirmation();
+
+                        fetchSpots(() => {
+                            this.props.notification('canceled order');
+                        });
+                    })
                     .catch((e) => {
                         console.log(e)
                     });
-
-                this.hideConfirmation();
-                this.props.notification('canceled order');
 
                 console.log("Document successfully deleted!");
             }).catch((error) => {
@@ -444,11 +448,19 @@ firebase.initializeApp({
 window.db = firebase.firestore();
 window.statusMap = {};
 
-db.collection("spots").get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-        const row = doc.data();
-        window.statusMap[row.number] = row.status;
-    });
+const fetchSpots = (callback) => {
+    db.collection("spots").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            const row = doc.data();
+            window.statusMap[row.number] = row.status;
+        });
 
-    ReactDOM.render(<App />, domContainer);
+        if (callback) {
+            callback();
+        }
+    });
+}
+
+fetchSpots(() => {
+  ReactDOM.render(<App />, domContainer);
 });

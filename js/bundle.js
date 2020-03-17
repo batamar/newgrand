@@ -46,12 +46,15 @@ var Spot = function (_React$Component) {
                     if (result.size === 0) {
                         return db.collection('spots').doc(spotNumber).delete();
                     }
+                }).then(function () {
+                    _this.hideConfirmation();
+
+                    fetchSpots(function () {
+                        _this.props.notification('canceled order');
+                    });
                 }).catch(function (e) {
                     console.log(e);
                 });
-
-                _this.hideConfirmation();
-                _this.props.notification('canceled order');
 
                 console.log("Document successfully deleted!");
             }).catch(function (error) {
@@ -589,11 +592,19 @@ firebase.initializeApp({
 window.db = firebase.firestore();
 window.statusMap = {};
 
-db.collection("spots").get().then(function (querySnapshot) {
-    querySnapshot.forEach(function (doc) {
-        var row = doc.data();
-        window.statusMap[row.number] = row.status;
-    });
+var fetchSpots = function fetchSpots(callback) {
+    db.collection("spots").get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            var row = doc.data();
+            window.statusMap[row.number] = row.status;
+        });
 
+        if (callback) {
+            callback();
+        }
+    });
+};
+
+fetchSpots(function () {
     ReactDOM.render(React.createElement(App, null), domContainer);
 });
